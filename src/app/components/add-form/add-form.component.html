@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <mat-card color="basic">
+    <mat-card-title>Создать новый счет</mat-card-title>
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <mat-form-field>
+        <mat-label>Номер счета</mat-label>
+        <input type="text" matInput formControlName="billNumber" placeholder="Номер счета">
+        <mat-error *ngIf="addForm.get('billNumber').hasError('required')">
+          Пожалуйста введите номер счета
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Сумма счета</mat-label>
+        <input type="text" matInput formControlName="billTotal" placeholder="Сумма счета">
+        <mat-error *ngIf="_billNumber.errors?.required">
+          Пожалуйста введите сумму счета
+        </mat-error>
+        <mat-error *ngIf="_billTotal.errors?.pattern">
+          Разрешаются только цифры, текущее значение "{{_billTotal.errors?.pattern?.actualValue}}"
+          содержит запрещенные символы
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Способ оплаты</mat-label>
+        <mat-select required formControlName="paymentMethod">
+          <mat-option>--</mat-option>
+          <mat-option value="creditCard">Кредитная карта</mat-option>
+          <mat-option value="debitСard">Дебетовая карта</mat-option>
+          <mat-option value="elCheck">Электронный чек</mat-option>
+        </mat-select>
+        <mat-error *ngIf="_paymentMethod.hasError('required')">
+          Необходимо указать способ оплаты
+        </mat-error>
+      </mat-form-field>
+      <fieldset>
+        <button mat-raised-button color="primary" type="submit">Сохранить</button>
+        <a routerLink="/"><button mat-raised-button color="basic" type="button">Закрыть</button></a>
+      </fieldset>
+    </form>
+  </mat-card>
+</div>
